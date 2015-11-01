@@ -1,0 +1,80 @@
+body {
+  background: url('paper.png');
+}
+h1 {
+  margin: 20px;
+}
+#page {
+  width: 900px;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-size: 40px;
+  text-align: center;
+  margin: 40px auto;
+}
+#todoapp{
+  box-shadow: 0 0 5px #684F91;
+  font-size: 25px;
+  color: #080D3B;
+  background-color: white;
+}
+#newtodoitem {
+  width: 90%;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 10px 30px;
+  border-left:    1px  solid #7d82b0;
+  border-right:   1px  solid #7d82b0;
+  border-bottom:  2px  solid #7d82b0;
+  border-top:     15px solid #477187;
+  text-align: center;
+  float: left;
+  font-weight: bold;
+}
+#addtodoitem {
+  width: 10%;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 10px 10px;
+  border-left:    1px  solid #7d82b0;
+  border-right:   1px  solid #7d82b0;
+  border-bottom:  2px  solid #7d82b0;
+  border-top:     15px solid #477187;
+  text-align: center;
+  float: left;
+  cursor: pointer;
+  font-weight: bold;
+}
+#newtodoitem::-webkit-input-placeholder {
+  color: #C3C3C4;
+  text-align: center;
+}
+#newtodoitem::-moz-placeholder {
+   color: #C3C3C4;
+   text-align: center;
+}
+#newtodoitem:focus::-webkit-input-placeholder {
+  color: transparent;
+  text-align: center;
+}
+#newtodoitem:focus::-moz-placeholder {
+   color: transparent;
+   text-align: center;
+}
+#todolist {
+  list-style-type: none;
+  box-sizing: border-box;
+}
+#todolist li a.unlink-item {
+  margin-left: 10px;
+  float: right;
+  font-size: 20px;
+}
+#todolist li a.done-item {
+  margin-left: 10px;
+  float: right;
+  font-size: 20px;
+}
+#todolist li span.completed{
+  text-decoration: line-through;
+  color: #C3C3C4;
+}
