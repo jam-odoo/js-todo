@@ -1,0 +1,43 @@
+Application Name : Your To-Do List 
+
+Files organized using following application tree structure  :
+=====================================
+js-todo-app /              | Application Directory 
+|-- index.html             | Contain UI for the Application (HTML)
+|-- static     /              | Directory To Hold All Assets
+|   |-- js      /               | Javascript Files (.js)
+|   |-- css    /               | Style Sheet Files (.css)
+|   |-- img   /               | Static Media Used in Application. (images)
+
+How it works: 
+=========
+Application Design Idea[1].
+Functionally :
+--------------------
+Run Application by opening "index.html" in standard browser (tested on latest stable Firefox and Chrome). Once user have application running at the top of the application user will see  "textbox" followed by the "Add" button, which will let user add task to your todo list.
+Every to-do item in the list will have "done" and "remove" buttons. "done" will let user mark that task to set to done my making striking through it and making it gray, while remove will remove the task from the list any point of time (weather done or not).
+If user close and open your application windows, application will restore the state of the your todo list and state (done|not done) of the items.
+
+Technicality:
+-------------------
+File "/static/js/core.js" hild all logic. Begging of the file four functions (getLocalStorage, updateLocalStorage, addToLocalStorage, popFromLocalStorage) to manage the "localStorage"[2][3], followed by the main function `todoApplication`, which hold whole application.
+Every time when add button is clicked it will get call the `addItem` and which will prepare the `li` to be added in todo-list 'ul' in the application. It will create done and remove node for todo items, and it will also reset the top textbox with focus in it to add next item.
+Every time when application is run it will run the `restoreState`, which will look in localStorage and if their is anything to be restore then it will process the todo list item and push them to UI for user.
+When user click the user done or remove it wil have it own event handler and it will do according actions, every item will have its own ("this") actions to react on.
+
+Problems Faced:
+------------------------
+- Storing and restoring the state of the todo item from localStorage(using object and json).
+- Strike through text on done was bi tricky 
+- Designing is my weakness :)(css).
+
+
+
+References:
+
+[1] http://docs.railsbridge.org/javascript-to-do-list/img/finished_app.png
+[2] https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
+[3] http://www.webreference.com/authoring/languages/html/HTML5-Client-Side/index.html
+DOM : https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model
+JSON : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
+JSON.stringify : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify

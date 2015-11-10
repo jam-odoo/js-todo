@@ -1,14 +1,30 @@
-//Local Storage Getter Setter for storing TodoList
-function getFromLocalStorage(){
+//Local Storage Helper TodoList for Todo Application
+//Fucntion to get the current stage of the todo item list object (json object)
+function getLocalStorage(){
    return localStorage.todoList ? JSON.parse(localStorage.todoList) : [];
 }
+//Update the local storage state to done by given name.
+function updateLocalStorage(name){
+    var storedTodos = getLocalStorage();
+    //loop through all item and find matching name. 
+    //For duplicate names does not respect any index, first found will done.
+    //TODO: make localStorage by Index to improve the duplicate item handling.
+    for (item in  storedTodos){
+        if (storedTodos[item].name === name){
+            storedTodos[item].done = true;
+        }
+    }
+    localStorage.todoList = JSON.stringify(storedTodos);
+}
+//Add given name to the todo item object list.
 function addToLocalStorage(name){
-    var storedTodos = getFromLocalStorage();
+    var storedTodos = getLocalStorage();
     storedTodos.push({"name": name, "done": false})
     localStorage.todoList = JSON.stringify(storedTodos);
 }
+//remove the give name from the todo item object list.
 function popFromLocalStorage(name){
-    var storedTodos = getFromLocalStorage();
+    var storedTodos = getLocalStorage();
     //find index make sure right index and splice it.
     for (item in  storedTodos){
         if (storedTodos[item].name === name){
@@ -17,21 +33,19 @@ function popFromLocalStorage(name){
     }
     localStorage.todoList = JSON.stringify(storedTodos);
 }
-function updateLocalStorage(name){
-    var storedTodos = getFromLocalStorage();
-    for (item in  storedTodos){
-        if (storedTodos[item].name === name){
-            storedTodos[item].done = true;
-        }
-    }
-    localStorage.todoList = JSON.stringify(storedTodos);
-}
+/*
+Main Application function to hold the business logic.
+It will read textbox todo list from html when started, and it will call the restoreState
+to restore the previous todo item list if anything is stored. Also link the Add event 
+for add item button.
+*/
 
 function todoApplication(){ 
     var addItemBtn = document.querySelector("#addtodoitem");
     var todoList = document.querySelector("#todolist");
     var itemValue = document.querySelector("#newtodoitem");
 
+    //event handler to remove the item form localStorage and UI
     function unlinkItem(name) {
         var li = this.parentNode
         var node = li.firstElementChild.textContent
@@ -40,6 +54,7 @@ function todoApplication(){
             popFromLocalStorage(node)
         }
     }
+    //event handler to set item to done in localStorage and UI
     function doneItem(){
         if (this.parentElement.firstChild){
             this.parentElement.firstChild.classList.add("completed");
@@ -49,6 +64,7 @@ function todoApplication(){
         }
         this.style.visibility = "hidden";
     }
+    //helper function to prepare done and remove node.
     function prepareActionNode(class_name, text, action){
         var node = document.createElement('a');
         node.setAttribute("href", "#");
@@ -57,6 +73,7 @@ function todoApplication(){
         node.addEventListener("click", action);
         return node
     }
+    //add new item and stage to the todo list and localStorage
     function addItem(name, toLocalStore, done){
         var newNode = document.createElement('li');
         var nodeSpan = document.createElement('span');
@@ -78,17 +95,19 @@ function todoApplication(){
             addToLocalStorage(itemValue.value)
         }
     }
+    //helper function to add new todo item list .
     function appendToList(event) {
         if (itemValue.value !== ''){
             addItem(itemValue.value, true, false);
         }
         itemValue.value = "";
         itemValue.focus();
+        //NOTE: confuse about using that statements,
         // event.preventDefault();
     }
     // Restore state function on load
     function restoreState(){
-        var items = getFromLocalStorage();
+        var items = getLocalStorage();
         for (item in items){
             if (items[item] !== '' || items[item] !== undefined){
                 addItem(items[item].name, false, items[item].done)
@@ -98,4 +117,5 @@ function todoApplication(){
     document.onload = restoreState()
     addItemBtn.addEventListener("click", appendToList);
 }
+//Trigger main application to setup all and make it functional
 todoApplication();
